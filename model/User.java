@@ -22,6 +22,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "ID: " + id + " | UUID: " + uuid + " | Name: " + name + " | Email: " + email + " | isDeleted: " + isDeleted + " |";
+        return String.format("ID: %d | UUID: %s | Name: %s | Email: %s | isDeleted: %b",
+                id, uuid, name, email, isDeleted);
     }
 }
