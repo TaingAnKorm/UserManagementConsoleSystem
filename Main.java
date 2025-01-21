@@ -4,7 +4,6 @@ import UserManagementConsoleSystem.controller.TelegramService;
 import UserManagementConsoleSystem.controller.UserController;
 import UserManagementConsoleSystem.model.UserModel;
 import UserManagementConsoleSystem.view.UserView;
-
 import java.util.Scanner;
 
 public class Main {
