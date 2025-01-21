@@ -10,30 +10,18 @@ public class TelegramService {
 
     private static final String BOT_TOKEN = "7703566154:AAHz73o_mXRSCkknUnEnlkl4nec3lQcs-U8";
     private static final String CHAT_ID = "748861779";
+    private static final String TELEGRAM_API_URL = "https://api.telegram.org/bot" + BOT_TOKEN + "/sendMessage";
 
     public boolean sendNotification(String message) {
         try {
-            String url = "https://api.telegram.org/bot" + BOT_TOKEN + "/sendMessage";
-            String parameters = "chat_id=" + CHAT_ID + "&text=" + URLEncoder.encode(message, StandardCharsets.UTF_8);
+            String encodedMessage = URLEncoder.encode(message, StandardCharsets.UTF_8);
+            URL url = new URL(TELEGRAM_API_URL + "?chat_id=" + CHAT_ID + "&text=" + encodedMessage);
 
-            URL obj = new URL(url + "?" + parameters);
-            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-            con.setRequestMethod("GET");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
 
-            int responseCode = con.getResponseCode();
-            if (responseCode == 200) {
-                return true;
-            } else {
-                BufferedReader in = new BufferedReader(new InputStreamReader(con.getErrorStream()));
-                String inputLine;
-                StringBuilder response = new StringBuilder();
-                while ((inputLine = in.readLine()) != null) {
-                    response.append(inputLine);
-                }
-                in.close();
-                System.out.println("Error: " + response.toString());
-                return false;
-            }
+            int responseCode = connection.getResponseCode();
+            return responseCode == HttpURLConnection.HTTP_OK;
         } catch (IOException e) {
             e.printStackTrace();
             return false;
